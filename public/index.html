@@ -4,54 +4,65 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+    <link rel="shortcut icon" href="src/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
     <title>Vue Instance Lifecycle</title>
   </head>
   <body>
     <div id="app">
-      <router-view name="header"></router-view>
-      <router-view></router-view>
-      <router-view name="footer"></router-view>
-      <router-view name="haha"></router-view>
-     
+      <button v-on:click="getData">가져오기</button>
+      <br>
+      totalItems : {{ totalItems }} <br />
+      totalPages : {{ totalPages }} <br />
+      <table>
+        <thead>
+          <th v-for="(title, index) in titles" :key="index">{{title}}</th>
+        </thead>
+        <tbody>
+          <tr v-for="(line, index) in items" :key="index">
+            <td v-for="(con, index) in line" :key="index">{{con}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
 
-      var Body = {
-        template: '<div>This is Body</div>'
-      }
-
-      var Header = {
-        template: '<div>This is Header</div>'
-      }
-
-      var Footer = {
-        template: '<div>This is Footer</div>'
-      }
-
-      var haha = {
-        template: '<h2>여기다다다다</h2>'
-      }
-      
-      var router = new VueRouter({
-        routes: [
-          {
-            path: '/',
-            components: {
-              default: Body,
-              header: Header,
-              footer: Footer,
-              haha: haha
-            }
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            titles: ['번호', '아이디', '이름', '이메일', '전화번호'],
+            items: [],
+            totalItems: 0,
+            totalPages: 0
           }
-        ]
+        },
+        methods: {
+          getData: function(page, size) {
+            var _app = this;
+            page = 0
+            size = 3
+            axios.get('http://localhost:8080/api/v1/user/list?page=' + page + '&size=' + size)
+            .then(function(response) {
+              _app.$data.items = response.data.data.content
+            })
+          }
+        },
       })
-
-      var app = new Vue({
-        router
-      }).$mount('#app');
       
     </script>
+    <style>
+      table tr td {
+        border: black 1px solid;
+      }
+
+      table {
+        border: black 1px solid;
+      }
+    </style>
   </body>
 </html>
