@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <UpHeader></UpHeader>
     <TodoInput></TodoInput>
     <TodoHeader></TodoHeader>
     <TodoList></TodoList>
@@ -13,14 +14,16 @@ import TodoHeader from './components/TodoHeader.vue'
 import TodoInput from './components/TodoInput.vue'
 import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
+import UpHeader from './components/UpHeader.vue'
 
 export default {
-
+  name: 'app',
   components: {
     TodoHeader: TodoHeader,
     TodoInput: TodoInput,
     TodoList: TodoList,
-    TodoFooter: TodoFooter
+    TodoFooter: TodoFooter,
+    UpHeader: UpHeader
   }
 }
 </script>

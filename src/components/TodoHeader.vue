@@ -1,5 +1,5 @@
 <template>
   <header>
-    <h1>ToDo it!</h1>
+    <h1>장호원시외버스터미널</h1>
   </header>
 </template>
